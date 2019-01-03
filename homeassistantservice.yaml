@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homeassistantservice
+  labels:
+    app: homeassistant
+spec:
+  ports:
+  - port: 80
+    targetPort: 8123
+    protocol: TCP
+  externalIPs:
+          - #IPAddress
+  selector:
+    app: homeassistant

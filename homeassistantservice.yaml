@@ -6,11 +6,10 @@ metadata:
   labels:
     app: homeassistant
 spec:
+  type: NodePort
   ports:
   - port: 80
     targetPort: 8123
-    protocol: TCP
-  externalIPs:
-          - #IPAddress
+    nodePort: 30123
   selector:
     app: homeassistant

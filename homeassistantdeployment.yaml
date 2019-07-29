@@ -34,7 +34,7 @@ spec:
       - name: homeassistant
         image: homeassistant/home-assistant:0.84.5
         ports:
-        - containerPort: 80
+        - containerPort: 8123
         volumeMounts:
         - mountPath: /config
           name: config

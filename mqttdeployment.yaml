@@ -8,9 +8,12 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 80
-    targetPort: 1883
-    nodePort: 30124
+  - port: 1883
+    protocol: TCP
+    name: firstport
+  - port: 9001
+    protocol: TCP
+    name: secondport
   selector:
     app: mqtt
 ---

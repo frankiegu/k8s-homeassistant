@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mqttservice
+  labels:
+    app: mqtt
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 1883
+    nodePort: 30124
+  selector:
+    app: mqtt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqttdeployment
+  labels:
+    app: mqttdeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mqttdeployment
+  template:
+    metadata:
+      labels:
+        app: mqttdeployment
+    spec:
+      containers:
+      - name: mqttdeployment
+        image: eclipse-mosquitto:latest
+        ports:
+        - containerPort: 1883
+        - containerPort: 9001
+        volumeMounts:
+        - mountPath: /mosquitto/config
+          name: mosquittoconfig
+        - mountPath: /mosquitto/data
+          name: mosquittodata
+        - mountPath: /mosquitto/log
+          name: mosquittolog
+      volumes:
+        - name: mosquittoconfig
+          hostPath:
+            path: /home/pi/mqtt/config
+        - name: mosquittodata
+          hostPath:
+            path: /home/pi/mqtt/data
+        - name: mosquittolog
+          hostPath:
+            path: /home/pi/mqtt/log
